@@ -1,2 +1,0 @@
-# updated_MDL_Win_Prediction_Notebook.ipynb
-updated_MDL_Win_Prediction_Notebook
