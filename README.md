@@ -69,7 +69,6 @@ Implemented in `updated_MDL_Win_Prediction_Notebook.ipynb`:
 
 1. Clone the repository or upload files to Colab:
 
-```bash
 git clone https://github.com/your-org-name/mdl-case-prediction.git
 
 # Load dataset
