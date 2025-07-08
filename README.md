@@ -69,7 +69,8 @@ Implemented in `updated_MDL_Win_Prediction_Notebook.ipynb`:
 
 1. Clone the repository or upload files to Colab:
 
-git clone https://github.com/your-org-name/mdl-case-prediction.git
+git clone https://github.com/Praveenkumarbalaji251/updated_MDL_Win_Prediction_Notebook.ipynb/blob/main/updated_mdl_win_prediction_notebook.ipynb
+
 
 # Load dataset
 import pandas as pd
