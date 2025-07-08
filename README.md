@@ -1,57 +1,101 @@
+# ⚖️ MDL Case Outcome Prediction
 
-# 🏛️ MDL Case Outcome Prediction
-
-This repository contains a machine learning project designed to predict outcomes of Multi-District Litigation (MDL) cases using structured case metadata, judicial assignments, procedural timelines, and litigation characteristics.
+This repository contains a supervised machine learning pipeline to predict the outcomes of Multi-District Litigation (MDL) cases based on structured metadata, judicial assignments, procedural history, and litigation characteristics. The project uses real-world data sourced from JPML and CourtListener APIs.
 
 ---
 
-## 📁 Files
+## 📂 Repository Structure
 
-- `mdl_dataset.csv` – Primary dataset containing 258 MDL cases with 27 features  
-- `updated_MDL_Win_Prediction_Notebook.ipynb` – Complete analysis and ML pipeline in a Jupyter notebook  
-- `README.md` – Project overview and usage instructions
+- `updated_MDL_Win_Prediction_Notebook.ipynb`  
+  A complete notebook for preprocessing, feature engineering, model training, and evaluation.
+
+- `mdl_dataset.csv`  
+  Structured dataset with 258 MDL cases × 27 features.
+
+- `README.md`  
+  Project overview and usage guide.
 
 ---
 
 ## 📊 Dataset Overview
 
-The dataset captures detailed information for 258 MDL cases, including:
+The dataset includes 258 observations and 27 features. Each record represents an MDL case enriched with:
 
-- **Case metadata:** MDL Number, Docket Number, Case Title, etc.  
-- **Judicial information:** Assigned Judge, District  
-- **Timeline data:** Filing date, hearing date, discovery periods  
-- **Case characteristics:** Type, Status, Outcome, Complexity  
-- **Procedural details:** Number of motions, settlement attempts, and more
+- **Metadata**: MDL Number, Docket ID, Case Title  
+- **Judicial Information**: Assigned Judge, Jurisdiction/District  
+- **Timeline Variables**: Filing dates, hearing dates, discovery durations  
+- **Procedural Features**: Number of motions filed, bellwether trials, settlement attempts  
+- **Outcome**: Categorical label (Settled, Dismissed, etc.)
 
-**Shape:** 258 rows × 27 columns  
-**Missing values:** Minimal (only 3 missing entries in the CourtListener Link column)
-
----
-
-## 🧠 Key Features
-
-- **🎯 Target Variable:** `Outcome` (e.g., Settled, Dismissed, etc.)
-- **🔍 Predictive Features:** Case type, complexity, judge, district, timeline metrics
-- **📊 Data Quality:** Clean and well-structured dataset
+> **Missing Data:** Only 3 nulls (non-critical columns); imputation or removal is optional
 
 ---
 
-## 🛠️ Model Approach
+## 🧠 Problem Formulation
+
+The task is formulated as a **binary classification** problem:
+
+- **Target Variable**: `Outcome` (transformed into `Win` vs `No-Win`)
+- **Objective**: Predict favorable resolution (settlement or success) based on prior case characteristics
+
+---
+
+## 🧪 Model Pipeline
 
 Implemented in `updated_MDL_Win_Prediction_Notebook.ipynb`:
 
-1. **Data Preprocessing & Feature Engineering**
-2. **Target Labeling:** Binary classification for “Win” vs. “No-Win”
-3. **Modeling Technique:** Logistic Regression with Cross-Validation
-4. **Performance Metrics:** ROC-AUC, Accuracy, Confusion Matrix
+1. **Data Preprocessing**
+   - Categorical encoding for judge/district fields
+   - Date parsing and timeline feature engineering
+   - Handling of missing/non-standard entries
+
+2. **Feature Engineering**
+   - Derived durations (e.g., Discovery Length, Pre-Trial Delay)
+   - Procedural event counts (motions, hearings)
+
+3. **Model Selection**
+   - Baseline model: `LogisticRegression()` from `sklearn`
+   - 5-Fold Cross-Validation
+   - Metrics: Accuracy, Precision, Recall, F1-score, ROC-AUC
+
+4. **Model Evaluation**
+   - Confusion matrix
+   - ROC curve analysis
+   - Class distribution analysis
 
 ---
 
-## 🚀 Usage
+## 🔧 How to Use
 
-To run the notebook:
+1. Clone the repository or upload files to Colab:
 
-```python
-# Load the dataset
+```bash
+git clone https://github.com/your-org-name/mdl-case-prediction.git
+
+# Load dataset
 import pandas as pd
 df = pd.read_csv('mdl_dataset.csv')
+
+
+Run the notebook end-to-end or adapt the pipeline to use other ML models (e.g., RandomForest, XGBoost).
+
+
+📦 Requirements
+
+Install dependencies using pip:
+
+
+
+pip install pandas numpy scikit-learn matplotlib seaborn jupyter
+
+
+Data Sources
+Judicial Panel on Multidistrict Litigation (JPML): Aggregated metadata on MDL proceedings
+
+CourtListener API: Judge and docket-level augmentation
+
+
+Notes
+Scope: This is a proof-of-concept model, not a production deployment.
+
+Limitations: Small sample size; generalization to future MDLs requires further validatio
